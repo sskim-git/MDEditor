@@ -16,6 +16,11 @@ public:
     void lineNumberAreaPaintEvent(QPaintEvent *event);
     int lineNumberAreaWidth() const;
 
+    // 포맷팅 삽입 함수
+    void insertMarkdown(const QString &before, const QString &after);
+    void insertAtLineStart(const QString &prefix);
+    void insertBlock(const QString &block);
+
 protected:
     void resizeEvent(QResizeEvent *event) override;
 

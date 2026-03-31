@@ -3,6 +3,7 @@
 
 #include <QPainter>
 #include <QTextBlock>
+#include <QTextCursor>
 
 MDEditor::MDEditor(QWidget *parent)
     : QPlainTextEdit(parent)
@@ -114,4 +115,49 @@ void MDEditor::lineNumberAreaPaintEvent(QPaintEvent *event) // 에디터 좌측�
         bottom = top + qRound(blockBoundingRect(block).height());
         ++blockNumber;
     }
+}
+
+void MDEditor::insertMarkdown(const QString &before, const QString &after)
+{
+    QTextCursor cursor = textCursor();
+    QString selected = cursor.selectedText();
+
+    cursor.beginEditBlock();
+    if (selected.isEmpty()) {
+        cursor.insertText(before + after);
+        cursor.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, after.length());
+    } else {
+        cursor.insertText(before + selected + after);
+    }
+    cursor.endEditBlock();
+
+    setTextCursor(cursor);
+    setFocus();
+}
+
+void MDEditor::insertAtLineStart(const QString &prefix)
+{
+    QTextCursor cursor = textCursor();
+
+    cursor.beginEditBlock();
+    cursor.movePosition(QTextCursor::StartOfBlock);
+    cursor.insertText(prefix);
+    cursor.endEditBlock();
+
+    setTextCursor(cursor);
+    setFocus();
+}
+
+void MDEditor::insertBlock(const QString &block)
+{
+    QTextCursor cursor = textCursor();
+
+    cursor.beginEditBlock();
+    if (!cursor.atBlockStart())
+        cursor.insertText("\n");
+    cursor.insertText(block);
+    cursor.endEditBlock();
+
+    setTextCursor(cursor);
+    setFocus();
 }

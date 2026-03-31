@@ -25,6 +25,7 @@ private slots:
 private:
     void setupUI();
     void setupMenuBar();
+    void setupToolBar();
 
     QSplitter *m_splitter;
     MDEditor *m_editor;
