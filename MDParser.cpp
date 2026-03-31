@@ -5,6 +5,9 @@
 #include "HeaderRule.h"
 #include "BoldRule.h"
 #include "ItalicRule.h"
+#include "LinkRule.h"
+#include "BlockquoteRule.h"
+#include "HorizontalRule.h"
 #include "ListRule.h"
 
 MDParser::MDParser(QObject *parent)
@@ -16,9 +19,12 @@ MDParser::MDParser(QObject *parent)
     // 3) Bold → Italic 순서 (**가 *보다 먼저 매칭되어야 함)
     // 4) 리스트 처리
     m_rules.append(new CodeBlockRule());
+    m_rules.append(new HorizontalRule());
     m_rules.append(new HeaderRule());
+    m_rules.append(new BlockquoteRule());
     m_rules.append(new BoldRule());
     m_rules.append(new ItalicRule());
+    m_rules.append(new LinkRule());
     m_rules.append(new ListRule());
 }
 

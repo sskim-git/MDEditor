@@ -14,12 +14,16 @@ qt_add_executable(MDEditor
     MDEditor.h MDEditor.cpp
     MDParser.h MDParser.cpp
     MDPreviewer.h MDPreviewer.cpp
+    MDSyntaxHighlighter.h MDSyntaxHighlighter.cpp
     IMarkdownRule.h
     HeaderRule.h HeaderRule.cpp
     BoldRule.h BoldRule.cpp
     ItalicRule.h ItalicRule.cpp
     ListRule.h ListRule.cpp
     CodeBlockRule.h CodeBlockRule.cpp
+    LinkRule.h LinkRule.cpp
+    BlockquoteRule.h BlockquoteRule.cpp
+    HorizontalRule.h HorizontalRule.cpp
 )
 
 set_target_properties(MDEditor PROPERTIES

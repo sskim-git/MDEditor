@@ -4,6 +4,7 @@
 #include <QPlainTextEdit>
 
 class LineNumberArea;
+class MDSyntaxHighlighter;
 
 class MDEditor : public QPlainTextEdit
 {
@@ -25,6 +26,7 @@ private slots:
 
 private:
     LineNumberArea *m_lineNumberArea;
+    MDSyntaxHighlighter *m_highlighter;
 };
 
 class LineNumberArea : public QWidget

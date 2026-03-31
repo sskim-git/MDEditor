@@ -1,4 +1,5 @@
 #include "MDEditor.h"
+#include "MDSyntaxHighlighter.h"
 
 #include <QPainter>
 #include <QTextBlock>
@@ -29,6 +30,8 @@ MDEditor::MDEditor(QWidget *parent)
 
     updateLineNumberAreaWidth(0); // 아래의 정의된 함수.
     highlightCurrentLine();
+
+    m_highlighter = new MDSyntaxHighlighter(document());
 }
 
 int MDEditor::lineNumberAreaWidth() const // 자릿수를 세는 함수
@@ -46,7 +49,7 @@ int MDEditor::lineNumberAreaWidth() const // 자릿수를 세는 함수
 
 void MDEditor::updateLineNumberAreaWidth(int /*newBlockCount*/) // 마찬가지로 마진 설정하는 부분
 {
-    setViewportMargins(lineNumberAreaWidth(), 0, 0, 0);
+    setViewportMargins(lineNumberAreaWidth(), 0, 0, 0); // 영역이 업데이트 되거나.
 }
 
 void MDEditor::updateLineNumberArea(const QRect &rect, int dy) // 영역의 크기를 재설정 하는 부분.
@@ -66,12 +69,12 @@ void MDEditor::resizeEvent(QResizeEvent *event) //윈도우 자체가 재조정 
 
     QRect cr = contentsRect();
     m_lineNumberArea->setGeometry(
-        QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height()));
+        QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height())); // 윈도우가 재조정될때
 }
 
-void MDEditor::highlightCurrentLine() //커서가 있는 라인의 색상을 변경
-{
-    QList<QTextEdit::ExtraSelection> extraSelections;
+void MDEditor::highlightCurrentLine() //커서가 있는 라인의 색상을 변경, 실행해서 글자를 입력하는 라인이 노란색으로 보이는 처리를 여기서함, 따라서 
+{ // 따라서 위에서 cursorPositionChanged를 연결한 것. 어디가 편집 라인인지 볼수 있도록. 편집기에서는 가독성을 위해 중요
+    QList<QTextEdit::ExtraSelection> extraSelections; 
 
     if (!isReadOnly()) {
         QTextEdit::ExtraSelection selection;
@@ -87,8 +90,9 @@ void MDEditor::highlightCurrentLine() //커서가 있는 라인의 색상을 변
     setExtraSelections(extraSelections);
 }
 
-void MDEditor::lineNumberAreaPaintEvent(QPaintEvent *event)
-{
+void MDEditor::lineNumberAreaPaintEvent(QPaintEvent *event) // 에디터 좌측에 텍스트가 입력된 부분의 줄 번호를 입력하는 부분. 여기에서 줄이 10개 넘어가거나 100개 넘어가면
+{ // 왼쪽 영역을 재조정해줘야 글자가 들어갈 크기가 되는 부분. lineNumberAreaWidth 가 필요함
+     // 해당 부분은 PaintEvent로 LineNumberArea::paintEvent가 호출될때 연결됨
     QPainter painter(m_lineNumberArea);
     painter.fillRect(event->rect(), QColor(240, 240, 240));
 
