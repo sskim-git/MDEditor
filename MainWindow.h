@@ -19,6 +19,7 @@ private slots:
     void onNewFile();
     void onOpenFile();
     void onSaveFile();
+    void onTextChanged();
 
 private:
     void setupUI();
