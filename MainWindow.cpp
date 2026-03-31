@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include "MDEditor.h"
+#include "MDParser.h"
 #include "MDPreviewer.h"
 #include <QSplitter>
 #include <QMenuBar>
@@ -11,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     setupUI();
     setupMenuBar();
+
+    m_parser = new MDParser(this);
 
     connect(m_editor, &QPlainTextEdit::textChanged, this, &MainWindow::onTextChanged);
 
@@ -112,5 +115,6 @@ void MainWindow::onSaveFile() // 파일 저장
 void MainWindow::onTextChanged()
 {
     QString text = m_editor->toPlainText();
-    m_previewer->setHtmlContent(text);
+    QString html = m_parser->parse(text);
+    m_previewer->setHtmlContent(html);
 }

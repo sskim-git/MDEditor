@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 class MDEditor;
+class MDParser;
 class MDPreviewer;
 class QSplitter;
 
@@ -27,6 +28,7 @@ private:
 
     QSplitter *m_splitter;
     MDEditor *m_editor;
+    MDParser *m_parser;
     MDPreviewer *m_previewer;
     QString m_currentFilePath;
 };
