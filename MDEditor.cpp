@@ -32,7 +32,10 @@ MDEditor::MDEditor(QWidget *parent)
     updateLineNumberAreaWidth(0); // 아래의 정의된 함수.
     highlightCurrentLine();
 
-    m_highlighter = new MDSyntaxHighlighter(document());
+    m_highlighter = new MDSyntaxHighlighter(document()); // 이부분에서 방금 클래스를 생성해서 내부 변수에 넣어줌
+
+    // document를 넣어주면서 document SIGNAL연결하는 겁니다. 계속해서 보면.
+    
 }
 
 int MDEditor::lineNumberAreaWidth() const // 자릿수를 세는 함수

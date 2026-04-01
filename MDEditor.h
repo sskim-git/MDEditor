@@ -31,7 +31,7 @@ private slots:
 
 private:
     LineNumberArea *m_lineNumberArea;
-    MDSyntaxHighlighter *m_highlighter;
+    MDSyntaxHighlighter *m_highlighter; // 방금 설명한 에디터에서 하이라이트 주기위해 기능을 정의한 클래스를 내부 변수로 선언
 };
 
 class LineNumberArea : public QWidget

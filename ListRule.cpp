@@ -3,6 +3,8 @@
 
 QString ListRule::apply(const QString &text) const
 {
+    // 리스트도 마찬가지
+    
     QStringList lines = text.split('\n');
     QString result;
     bool inList = false;

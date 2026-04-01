@@ -58,8 +58,11 @@ void MainWindow::setupMenuBar() // 메뉴바 설정
     exitAction->setShortcut(QKeySequence::Quit);
 }
 
-void MainWindow::setupToolBar()
+void MainWindow::setupToolBar() // 여기에 이제 그러한 기능들을 쉽게 사용하기 위해서// 사용자가 **인지 ****인지 이런것도 외울필요없도록
 {
+
+    // 상단 툴바를 만들고, 버튼을 추가하면서, 클릭시 에디터에 자동 삽입되도록 한 모습입니다.
+
     QToolBar *toolbar = addToolBar(tr("Formatting"));
     toolbar->setMovable(false);
     toolbar->setIconSize(QSize(18, 18));
@@ -71,14 +74,14 @@ void MainWindow::setupToolBar()
     toolbar->addSeparator();
 
     // 제목 H1 ~ H3
-    toolbar->addAction(tr("H1"), [this]() { m_editor->insertAtLineStart("# "); });
+    toolbar->addAction(tr("H1"), [this]() { m_editor->insertAtLineStart("# "); }); // 해더인경우 # 추가
     toolbar->addAction(tr("H2"), [this]() { m_editor->insertAtLineStart("## "); });
     toolbar->addAction(tr("H3"), [this]() { m_editor->insertAtLineStart("### "); });
 
     toolbar->addSeparator();
 
     // 굵게, 기울임, 취소선, 코드
-    toolbar->addAction(tr("B"), [this]() { m_editor->insertMarkdown("**", "**"); });
+    toolbar->addAction(tr("B"), [this]() { m_editor->insertMarkdown("**", "**"); }); // bold인 경우 **추가. 제가 설명하면서 **이랑 ##을 헤깔렸는데 중요하지않습니다.
     toolbar->addAction(tr("I"), [this]() { m_editor->insertMarkdown("*", "*"); });
     toolbar->addAction(tr("S"), [this]() { m_editor->insertMarkdown("~~", "~~"); });
     toolbar->addAction(tr("<>"), [this]() { m_editor->insertMarkdown("`", "`"); });
@@ -99,6 +102,18 @@ void MainWindow::setupToolBar()
     toolbar->addAction(tr("\" Quote"), [this]() { m_editor->insertAtLineStart("> "); });
     toolbar->addAction(tr("— HR"), [this]() { m_editor->insertBlock("\n---\n"); });
     toolbar->addAction(tr("Code Block"), [this]() { m_editor->insertMarkdown("```\n", "\n```"); });
+
+    // 만약툴바에 또 다른 스타일을 추가한다면
+    toolbar->addAction(tr("임시양식"), [this]() { m_editor->insertMarkdown("@@"); });
+    // 이렇게 추가를 하면 툴바에 버튼생기고. 클릭하면 @@이 에디터에 들어가겠죠.
+    // 그뒤에 룰 만들고, 하이아리터 부분 다르게 할꺼면 만들고. 이런식으로 추가하면됩니다.
+
+    // 여기 까지 qt소스내용이구요.
+    // 이 마크다운 편집기는 오픈소스로도 있습니다. 한번 그걸 볼께요
+     // 즉 어제 이야기 했던, 오픈소스 코드를 일부 수정한다. 이부분을
+     // 이코드는 직접 짠거고.
+     // 오픈소스는 지금 부터 할꺼를 들고와서, 그 부분에 무엇을 구현했다로 넘어가면 Qt도 이해했으며, 어느정도 소스코드가 수정가능하구나를 어필가능합니다.
+
 
     // 툴바 버튼 스타일
     toolbar->setStyleSheet(
