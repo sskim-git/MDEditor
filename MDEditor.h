@@ -16,7 +16,6 @@ public:
     void lineNumberAreaPaintEvent(QPaintEvent *event);
     int lineNumberAreaWidth() const;
 
-    // 포맷팅 삽입 함수
     void insertMarkdown(const QString &before, const QString &after);
     void insertAtLineStart(const QString &prefix);
     void insertBlock(const QString &block);
@@ -31,7 +30,7 @@ private slots:
 
 private:
     LineNumberArea *m_lineNumberArea;
-    MDSyntaxHighlighter *m_highlighter; // 방금 설명한 에디터에서 하이라이트 주기위해 기능을 정의한 클래스를 내부 변수로 선언
+    MDSyntaxHighlighter *m_highlighter;
 };
 
 class LineNumberArea : public QWidget
